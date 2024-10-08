@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function CandidatoItem( {imagen, nombre, initialVotos} ){
+export default function CandidatoItem( {ID, imagen, nombre, initialVotos, changeVotos} ){
 
     const [votos, setVotos] = useState(initialVotos);
 
@@ -8,12 +8,14 @@ export default function CandidatoItem( {imagen, nombre, initialVotos} ){
         e.preventDefault();
         const votos_temp = votos + 1;
         setVotos(votos_temp);
+        changeVotos(ID, votos_temp);
     }
 
     const handlerVotos = (e) => {
         const votos_temp = parseInt(e.target.value, 10);
         if( isNaN(votos_temp) ) return;
         setVotos(votos_temp);
+        changeVotos(ID, votos_temp);
     }
 
     return (

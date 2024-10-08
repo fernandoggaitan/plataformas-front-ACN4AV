@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react"
+
 import CandidatoItem from "./CandidatoItem"
 
 const lista = [
@@ -8,17 +10,42 @@ const lista = [
 
 export default function CandidatosLista() {
 
+    const [candidatos, setCandidatos] = useState(lista);
+    const [cantidad_votos, setCantidadVotos] = useState(0);
+
+    useEffect(() => {
+        calcularCantidadVotos()
+    }, [candidatos])
+
+    const calcularCantidadVotos = () => {
+        const cantidad_votos_temp = candidatos.reduce( (cantidad, item) => cantidad += item.votos, 0 );
+        setCantidadVotos(cantidad_votos_temp);
+    }
+
+    const handlerCandidato = (ID, votos) => {
+        const candidatos_temp = candidatos.map( (item) =>  {
+            if(ID == item.ID){
+                item.votos = votos;
+            }
+            return item;
+        });
+        setCandidatos(candidatos_temp);
+    }
+
     return (
         <>
             <h1> Lista de candidatos </h1>
+            <div> Cantidad de votos: {cantidad_votos} </div>
             <div className="row">
                 {
-                    lista.map( (item) => (
+                    candidatos.map( (item) => (
                         <div key={item.ID} className="col-lg-3">
                             <CandidatoItem 
+                                ID={item.ID}
                                 imagen={item.imagen}
                                 nombre={item.nombre}
                                 initialVotos={item.votos}
+                                changeVotos={handlerCandidato}
                             />
                         </div>
                     ))
