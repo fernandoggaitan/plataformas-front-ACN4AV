@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-import CandidatoItem from "./CandidatoItem"
+import CandidatoItem from "../components/CandidatoItem"
 
 const lista = [
     {ID: 1, imagen: "/img/personas/1.jpg", nombre: "Sofía", votos: 5},
